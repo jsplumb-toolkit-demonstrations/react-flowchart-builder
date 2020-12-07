@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>jsPlumb Toolkit React Demo</title>
+      <link rel="stylesheet" href="node_modules/jsplumbtoolkit/dist/css/jsplumbtoolkit.css">
+      <link rel="stylesheet" href="node_modules/jsplumbtoolkit-syntax-highlighter/dist/css/jsplumbtoolkit-syntax-highlighter.css">
+      <link rel="stylesheet" href="node_modules/jsplumbtoolkit-demo-support/dist/css/jsplumbtoolkit-demo-support.css">
+      <link rel="stylesheet" href="node_modules/jsplumbtoolkit-editable-connectors/dist/css/jsplumbtoolkit-editable-connectors.css">
+
+      <link rel="stylesheet" href="app.css">
+  </head>
+  <body>
+    <!-- content -->
+
+    <script type="text/x-jtk-templates" src="templates.html"></script>
+
+    <div class="jtk-demo-main" id="jtk-demo-flowchart">
+
+        <!-- this is the main drawing area -->
+        <div class="jtk-demo-canvas" id="canvas">
+            <!-- controls -->
+            <div class="controls"></div>
+            <!-- miniview -->
+            <div class="miniview"></div>
+        </div>
+
+        <div class="jtk-demo-rhs">
+
+            <!-- the node palette -->
+            <div class="node-palette sidebar" id="node-palette"></div>
+            <div class="description">
+                <p>
+                    This sample application is a builder for flowcharts. Questions, actions and outputs are supported.
+                </p>
+                <ul>
+                    <li>Drag new nodes from the palette on the left onto whitespace to add new disconnected nodes</li>
+                    <li>Drag new nodes from the palette on the left onto on edge to drop a node between two existing nodes</li>
+                    <li>Drag from the grey border of any node to any other node to establish a link, then provide a description for the link's label</li>
+                    <li>Click a link to edit its label.</li>
+                    <li>Click the 'Pencil' icon to enter 'select' mode, then select several nodes. Click the canvas to exit.</li>
+                    <li>Click the 'Home' icon to zoom out and see all the nodes.</li>
+                </ul>
+            </div>
+            <div class="dataset-placeholder"></div>
+        </div>
+    </div>
+
+    <!-- /content -->
+
+    <!-- demo -->
+    <script src="dist/bundle.js"></script>
+    <!-- /demo -->
+
+  </body>
+</html>
