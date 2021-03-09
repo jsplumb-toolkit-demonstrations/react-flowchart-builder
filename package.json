@@ -12,14 +12,15 @@
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "jsplumbtoolkit": "file:./jsplumbtoolkit.tgz",
-    "jsplumbtoolkit-react": "file:./jsplumbtoolkit-react.tgz",
-    "jsplumbtoolkit-undo-redo": "file:./jsplumbtoolkit-undo-redo.tgz",
-    "jsplumbtoolkit-drop": "file:./jsplumbtoolkit-drop.tgz",
-    "jsplumbtoolkit-react-drop": "file:./jsplumbtoolkit-react-drop.tgz",
-    "jsplumbtoolkit-syntax-highlighter": "file:./jsplumbtoolkit-syntax-highlighter.tgz",
-    "jsplumbtoolkit-demo-support": "file:./jsplumbtoolkit-demo-support.tgz",
-    "jsplumbtoolkit-editable-connectors": "file:./jsplumbtoolkit-editable-connectors.tgz"
+    "@jsplumbtoolkit/core": "file:./jsplumbtoolkit-core.tgz",
+    "@jsplumbtoolkit/browser-ui": "file:./jsplumbtoolkit-browser-ui.tgz",
+    "@jsplumbtoolkit/react": "file:./jsplumbtoolkit-react.tgz",
+    "@jsplumbtoolkit/undo-redo": "file:./jsplumbtoolkit-undo-redo.tgz",
+    "@jsplumbtoolkit/drop": "file:./jsplumbtoolkit-drop.tgz",
+    "@jsplumbtoolkit/react-drop": "file:./jsplumbtoolkit-react-drop.tgz",
+    "@jsplumb/json-syntax-highlighter": "^1.0.2",
+    "@jsplumb/toolkit-demo-support": "^1.0.0",
+    "@jsplumbtoolkit/connector-editors": "file:./jsplumbtoolkit-connector-editors.tgz"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
