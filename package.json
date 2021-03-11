@@ -17,9 +17,9 @@
     "jsplumbtoolkit-undo-redo": "file:./jsplumbtoolkit-undo-redo.tgz",
     "jsplumbtoolkit-drop": "file:./jsplumbtoolkit-drop.tgz",
     "jsplumbtoolkit-react-drop": "file:./jsplumbtoolkit-react-drop.tgz",
-    "jsplumbtoolkit-syntax-highlighter": "file:./jsplumbtoolkit-syntax-highlighter.tgz",
-    "jsplumbtoolkit-demo-support": "file:./jsplumbtoolkit-demo-support.tgz",
-    "jsplumbtoolkit-editable-connectors": "file:./jsplumbtoolkit-editable-connectors.tgz"
+    "jsplumbtoolkit-editable-connectors": "file:./jsplumbtoolkit-editable-connectors.tgz",
+    "@jsplumb/json-syntax-highlighter": "^1.0.4",
+    "@jsplumb/toolkit-demo-support": "^1.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
