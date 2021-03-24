@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { JsPlumbToolkitMiniviewComponent, JsPlumbToolkitSurfaceComponent }  from 'jsplumbtoolkit-react';
-import { jsPlumbToolkit, Dialogs } from 'jsplumbtoolkit';
+import { JsPlumbToolkitMiniviewComponent, JsPlumbToolkitSurfaceComponent }  from '@jsplumbtoolkit/react';
+import { ready, newInstance, DrawingToolsPlugin } from "@jsplumbtoolkit/browser-ui"
+
+import * as Dialogs from "@jsplumbtoolkit/dialogs"
 
 import { QuestionComponent } from './question-component.jsx';
 import { ActionComponent } from './action-component.jsx';
@@ -14,16 +16,16 @@ import DragDropNodeSource from './drag-drop-node-source.jsx';
 import { ControlsComponent } from './controls-component.jsx';
 import { DatasetComponent } from './dataset-component.jsx';
 
-import "jsplumbtoolkit-editable-connectors";
+import * as ConnectorEditors from "@jsplumbtoolkit/connector-editors"
 
-jsPlumbToolkit.ready(() => {
+ready(() => {
 
     const mainElement = document.querySelector("#jtk-demo-flowchart"),
         nodePaletteElement = mainElement.querySelector(".node-palette");
 
 // ------------------------- dialogs ------------------------------------------------------------
 
-    Dialogs.initialize({
+    const dialogs = Dialogs.createDialogManager({
         selector: ".dlg"
     });
 
@@ -31,9 +33,9 @@ jsPlumbToolkit.ready(() => {
 
         constructor(props) {
             super(props);
-            this.toolkit = jsPlumbToolkit.newInstance({
+            this.toolkit = newInstance({
                 nodeFactory: function (type, data, callback) {
-                    Dialogs.show({
+                    dialogs.show({
                         id: "dlgText",
                         title: "Enter " + type + " name:",
                         onOK:  (d) => {
@@ -91,12 +93,12 @@ jsPlumbToolkit.ready(() => {
                     "default": {
                         anchor:"AutoDefault",
                         endpoint:"Blank",
-                        connector: ["EditableFlowchart", { cornerRadius: 5 } ],
+                        connector: { type:"Orthogonal", options:{ cornerRadius: 5 } },
                         paintStyle: { strokeWidth: 2, stroke: "rgb(132, 172, 179)", outlineWidth: 3, outlineStroke: "transparent" },	//	paint style for this edge type.
                         hoverPaintStyle: { strokeWidth: 2, stroke: "rgb(67,67,67)" }, // hover paint style for this edge type.
                         events: {
                             "dblclick":  (params) => {
-                                Dialogs.show({
+                                dialogs.show({
                                     id: "dlgConfirm",
                                     data: {
                                         msg: "Delete Edge"
@@ -107,25 +109,28 @@ jsPlumbToolkit.ready(() => {
                                 });
                             },
                             "click": (params) => {
-                                this.surface.startEditing(params.edge);
+                                this.pathEditor.startEditing(params.edge);
                             }
                         },
                         overlays: [
-                            [ "Arrow", { location: 1, width: 10, length: 10 }],
-                            [ "Arrow", { location: 0.3, width: 10, length: 10 }]
+                            { type:"Arrow", options:{ location: 1, width: 10, length: 10 }},
+                            { type:"Arrow", options:{ location: 0.3, width: 10, length: 10 }}
                         ]
                     },
                     "connection":{
                         parent:"default",
                         overlays:[
-                            [ "Label", {
-                                label: "${label}",
-                                events:{
-                                    click:(params) => {
-                                        this._editLabel(params.edge);
+                            {
+                                type:"Label",
+                                options:{
+                                    label: "${label}",
+                                    events:{
+                                        click:(params) => {
+                                            this._editLabel(params.edge);
+                                        }
                                     }
                                 }
-                            }]
+                            }
                         ]
                     }
                 },
@@ -155,9 +160,9 @@ jsPlumbToolkit.ready(() => {
                 events: {
                     canvasClick: (e) => {
                         this.toolkit.clearSelection();
-                        this.surface.stopEditing();
+                        this.pathEditor.stopEditing();
                     },
-                    edgeAdded:(params) => {
+                    "edge:add":(params) => {
                         if (params.addedByMouse) {
                             this._editLabel(params.edge, true);
                         }
@@ -168,7 +173,10 @@ jsPlumbToolkit.ready(() => {
                 dragOptions: {
                     filter: ".jtk-draw-handle, .node-action, .node-action i"
                 },
-                zoomToFit:true
+                zoomToFit:true,
+                plugins:[
+                    DrawingToolsPlugin.type
+                ]
             };
         }
 
@@ -189,12 +197,14 @@ jsPlumbToolkit.ready(() => {
         }
 
         componentDidMount() {
-            this.toolkit.load({url:"data/copyright.json"});
+            this.toolkit.load({url:"../data/copyright.json"});
             this.controls.initialize(this.surface);
-            window.toolkit = this.toolkit;
-            new jsPlumbToolkit.DrawingTools({
-                renderer: this.surface
-            });
+
+            // new jsPlumbToolkit.DrawingTools({
+            //     renderer: this.surface
+            // });
+
+            this.pathEditor = new ConnectorEditors.EdgePathEditor(this.surface)
 
             ReactDOM.render(
                 <DragDropNodeSource

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BaseNodeComponent } from"jsplumbtoolkit-react";
+import { BaseNodeComponent } from "@jsplumbtoolkit/react";
 
 /**
  * Component used to render a start node. Note that this component extends the Toolkit's BaseNodeComponent, whereas the others

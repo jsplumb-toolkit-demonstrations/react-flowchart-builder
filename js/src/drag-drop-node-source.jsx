@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {SurfaceDropComponent} from 'jsplumbtoolkit-react-drop';
+import {SurfaceDropComponent} from '@jsplumbtoolkit/react-drop';
 
 class DragDropNodeSource extends SurfaceDropComponent {
     render() {
