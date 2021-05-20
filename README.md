@@ -41,21 +41,26 @@ This is the full `package.json` for the demonstration:
 ```javascript
 {
   "name": "jsplumbtoolkit-react",
-  "version": "*.*.*",
+  "version": "1.8.0",
   "description": "Integration between jsPlumb Toolkit and React",
   "main": "index.js",
   "author": "jsPlumb <hello@jsplumbtoolkit.com> (https://jsplumbtoolkit.com)",
   "license": "Commercial",
   "scripts": {
-    "build": "node ./node_modules/webpack/bin/webpack.js"
+    "build": "node ./node_modules/webpack/bin/webpack.js",
+    "start": "webpack-dev-server"
   },
   "dependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "font-awesome": "^4.7.0",
-    "jsplumbtoolkit": "file:../../jsplumbtoolkit.tgz",
-    "jsplumbtoolkit-react": "file:../../jsplumbtoolkit-react.tgz",
-    "jsplumbtoolkit-undo-redo": "file:../../jsplumbtoolkit-undo-redo.tgz"
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "jsplumbtoolkit": "file:./jsplumbtoolkit.tgz",
+    "jsplumbtoolkit-react": "file:./jsplumbtoolkit-react.tgz",
+    "jsplumbtoolkit-undo-redo": "file:./jsplumbtoolkit-undo-redo.tgz",
+    "jsplumbtoolkit-drop": "file:./jsplumbtoolkit-drop.tgz",
+    "jsplumbtoolkit-react-drop": "file:./jsplumbtoolkit-react-drop.tgz",
+    "jsplumbtoolkit-editable-connectors": "file:./jsplumbtoolkit-editable-connectors.tgz",
+    "@jsplumb/json-syntax-highlighter": "^1.0.4",
+    "@jsplumb/toolkit-demo-support": "^1.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
@@ -63,9 +68,10 @@ This is the full `package.json` for the demonstration:
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.1"
+    "webpack-dev-server": "^2.11.5"
   }
 }
+
 
 
 ```
@@ -117,16 +123,15 @@ module.exports = {
 #### CSS
 
 ```xml
-<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" href="node_modules/jsplumbtoolkit/dist/css/jsplumbtoolkit-defaults.css">
-<link rel="stylesheet" href="node_modules/jsplumbtoolkit/dist/css/syntax-highlighter.css">
-<link rel="stylesheet" href="node_modules/jsplumbtoolkit/dist/css/jsplumbtoolkit-demo.css">
+<link rel="stylesheet" href="node_modules/jsplumbtoolkit/dist/css/jsplumbtoolkit.css">
+<link rel="stylesheet" href="node_modules/@jsplumb/json-syntax-highlighter/jsplumbtoolkit-syntax-highlighter.css">
+<link rel="stylesheet" href="node_modules/@jsplumb/toolkit-demo-support/jsplumbtoolkit-demo-support.css">
+<link rel="stylesheet" href="node_modules/jsplumbtoolkit-editable-connectors/dist/css/jsplumbtoolkit-editable-connectors.css">
 
 <link rel="stylesheet" href="app.css">
 
 ```
-Font Awesome, `jsplumbtoolkit-demo.css`, and `app.css` are used for this demo and are not jsPlumb Toolkit requirements. `jsplumbtoolkit-defaults.css` is recommended for 
-all apps using the Toolkit, at least when you first start to build your app. This stylesheet contains sane defaults for the various widgets in the Toolkit.
+`jsplumbtoolkit-demo-support.css`, `jsplumbtoolkit-syntax-highlighter.css`, and `app.css` are used for this demo and are not jsPlumb Toolkit requirements. `jsplumbtoolkit.css` is recommended for all apps using the Toolkit, at least when you first start to build your app. This stylesheet contains sane defaults for the various widgets in the Toolkit.
 
 #### JS
 
@@ -134,14 +139,20 @@ We use Webpack to create a bundle for the demonstration - JS dependencies are th
 
 ```javascript
 "dependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "jsplumbtoolkit": "file:../../jsplumbtoolkit.tgz",
-    "jsplumbtoolkit-react": "file:../../jsplumbtoolkit-react.tgz"
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "jsplumbtoolkit": "file:./jsplumbtoolkit.tgz",
+    "jsplumbtoolkit-react": "file:./jsplumbtoolkit-react.tgz",
+    "jsplumbtoolkit-undo-redo": "file:./jsplumbtoolkit-undo-redo.tgz",
+    "jsplumbtoolkit-drop": "file:./jsplumbtoolkit-drop.tgz",
+    "jsplumbtoolkit-react-drop": "file:./jsplumbtoolkit-react-drop.tgz",
+    "jsplumbtoolkit-editable-connectors": "file:./jsplumbtoolkit-editable-connectors.tgz",
+    "@jsplumb/json-syntax-highlighter": "^1.0.4",
+    "@jsplumb/toolkit-demo-support": "^1.0.1"
 }
 ```
 
-jsPlumb has been tested against versions `15.4.2`, `15.5.0` and `16.0.0` of React.
+jsPlumb 2.4.8 - the latest version at the time of writing - works with version `17.0.0` of React. Prior versions of jsPlumb have been tested with versions `15.4.2`, `15.5.0` and `16.0.0` of React.
 
 [TOP](#top)
 
@@ -384,14 +395,9 @@ this.toolkit = jsPlumbToolkit.newInstance({
 });
 ```
 
-We provide a `nodeFactory`, which is a function that jsPlumb calls when a new node is dropped onto the canvas. The node factory
-is given the type of the node and any initial data (that was created via the `dataGenerator` plugged in to the drag/drop mechanism),
-and a callback function that should be called with the given data if the factory wishes to proceed. In our implementation we popup a dialog
-prompting the user for a node name, and if that name is two or more characters in length, we generate a random ID and hit the callback. If the
-name is less than two characters in length we do not proceed.
+We provide a `nodeFactory`, which is a function that jsPlumb calls when a new node is dropped onto the canvas. The node factory is given the type of the node and any initial data (that was created via the `dataGenerator` plugged in to the drag/drop mechanism), and a callback function that should be called with the given data if the factory wishes to proceed. In our implementation we popup a dialog prompting the user for a node name, and if that name is two or more characters in length, we generate a random ID and hit the callback. If the name is less than two characters in length we do not proceed.
 
-We also provide a `beforeStartConnect` function, which returns an object. This object is used as the initial data for the edge that is
-being drawn.
+We also provide a `beforeStartConnect` function, which returns an object. This object is used as the initial data for the edge that is being drawn.
 
 
 ##### 2. Rendering child components
@@ -409,12 +415,9 @@ render() {
 }
 ```
 
-`JsPlumbToolkitSurfaceComponent` is discussed [here](react-integration#surface-component). Note that in this
-demo we use `ref={ (c) => this.surface = c.surface }` on its declaration in order to get
-a reference to the component - we have to pass it in to various others. 
+`JsPlumbToolkitSurfaceComponent` is discussed [here](react-integration#surface-component). Note that in this demo we use `ref={ (c) => this.surface = c.surface }` on its declaration in order to get a reference to the component - we have to pass it in to various others. 
 
-`ControlsComponent` is a small helper component created to offer buttons for zoom, lasso mode, and undo/redo. It isn't 
-part of the Toolkit's React integration, but it is production ready and can be used if you want to use it.
+`ControlsComponent` is a small helper component created to offer buttons for zoom, lasso mode, and undo/redo. It isn't part of the Toolkit's React integration, but it is production ready and can be used if you want to use it.
 
 `DatasetComponent` is a React version of the dataset view you may have een in other Toolkit demonstrations.
 
@@ -439,14 +442,11 @@ componentDidMount() {
 }
 ```
 
-We do this because we know `componentDidMount()` won't be called until the Surface
-component has been created, and we need the Surface component for the miniview and node
-palette constructors, and also to initialize our controls.
+We do this because we know `componentDidMount()` won't be called until the Surface component has been created, and we need the Surface component for the miniview and node palette constructors, and also to initialize our controls.
 
 ##### 3. Initialise the drawing tools
 
-This occurs in `componentDidMount()`, because, again, we need a reference to the Surface widget
-before we can initialise the drawing tools:
+This occurs in `componentDidMount()`, because, again, we need a reference to the Surface widget before we can initialise the drawing tools:
 
 ```
 new jsPlumbToolkit.DrawingTools({
@@ -487,8 +487,7 @@ _editLabel (edge, deleteOnCancel) {
 }
 ```
 
-It is called in two places. For existing edges, it is called when the user clicks the label. This
-is wired up in the view:
+It is called in two places. For existing edges, it is called when the user clicks the label. This is wired up in the view:
 
 ```javascript
 edges: {
@@ -536,8 +535,7 @@ this.renderParams = {
 }
 ```
 
-We pass in `true` for the second argument here, meaning the edge is new. `_editLabel` will
-discard an edge if the user presses cancel on the dialog and this flag was set to true.
+We pass in `true` for the second argument here, meaning the edge is new. `_editLabel` will discard an edge if the user presses cancel on the dialog and this flag was set to true.
 
 
 <a name="node-components"></a>
@@ -564,24 +562,23 @@ export class StartComponent extends BaseNodeComponent {
 
     render() {
 
-        const obj = this.state;
+        const obj = this.node.data;
 
         return <div style={{width:obj.w + 'px', height:obj.h + 'px'}} className="flowchart-object flowchart-start">
             <div style={{position:'relative'}}>
                 <svg width={obj.w} height={obj.h}>
-                    <ellipse cx={obj.w / 2} cy={obj.h / 2} rx={obj.w / 2} ry={obj.h / 2} className="outer"/>
                     <ellipse cx={obj.w / 2} cy={obj.h / 2} rx={(obj.w /2) - 10} ry={(obj.h/2) - 10} className="inner"/>
                     <text textAnchor="middle" x={obj.w / 2} y={ obj.h / 2 } dominantBaseline="central">{obj.text}</text>
                 </svg>
             </div>
+            <div className="drag-start connect"></div>
             <jtk-source port-type="start" filter=".outer" filter-negate="true"/>
         </div>
     }
 }
 ```
 
-The **Start** node consists of an ellipse with a text label centered inside of it. Note that all references to the node data that is being rendered are prefixed 
-with `obj.`. For instance, the first line in the template here is:
+The **Start** node consists of an ellipse with a text label centered inside of it. Note that all references to the node data that is being rendered are prefixed with `obj.`. For instance, the first line in the template here is:
 
 ```xml
 <div style={{left:obj.left + 'px', top:obj.top + 'px', width:obj.w + 'px', height:obj.h + 'px'}} className="flowchart-object flowchart-start">
@@ -589,11 +586,7 @@ with `obj.`. For instance, the first line in the template here is:
 
 React expects one root element per template. 
 
-The `jtk-source` element declares that this node is an edge source, of type `start` (the `port-type` attribute 
-specifies this).  The `filter` attribute instructs the Toolkit to enable drag only from some element that is not a 
-child of an `svg` element, but then `filter-negate` is `true`: the result is that dragging will begin only from a 
-descendant of the `svg` element. What this means visually is that the user will not be able to start a drag from the 
-whitespace surrounding the ellipse.
+The `jtk-source` element declares that this node is an edge source, of type `start` (the `port-type` attribute specifies this).  The `filter` attribute instructs the Toolkit to enable drag only from some element that is not a child of an `svg` element, but then `filter-negate` is `true`: the result is that dragging will begin only from a descendant of the `svg` element. What this means visually is that the user will not be able to start a drag from the whitespace surrounding the ellipse.
 
 
 ##### QuestionComponent
@@ -613,23 +606,20 @@ export class QuestionComponent extends BaseEditableComponent {
 
     render() {
 
-        const obj = this.state;
+        const obj = this.node.data;
 
         return <div style={{width:obj.w + 'px', height:obj.h + 'px'}} className="flowchart-object flowchart-question">
             <div style={{position:'relative'}}>
-                <div className="node-edit node-action" onClick={this.edit.bind(this)}>
-                    <i className="fa fa-pencil-square-o"/>
-                </div>
-                <div className="node-delete node-action" onClick={this.remove.bind(this)}>
-                    <i className="fa fa-times"/>
-                </div>
+
                 <svg width={obj.w} height={obj.h}>
-                    <path d={'M' +  (obj.w/2) + ' 0 L ' + obj.w + ' ' +  (obj.h/2) + ' L ' + (obj.w/2) + ' ' + obj.h + '  L 0 ' + (obj.h/2) + '  Z'} className="outer"/>
                     <path d={'M' +  (obj.w/2) + ' 10 L ' + (obj.w - 10) + ' ' +  (obj.h/2) + ' L ' + (obj.w/2) + ' ' + (obj.h - 10) + '  L 10 ' + (obj.h/2) + '  Z'} className="inner"/>
                     <text textAnchor="middle" x={obj.w/2} y={obj.h/2} dominantBaseline="central">{obj.text}</text>
                 </svg>
             </div>
-            <jtk-source port-type="source" filter=".outer"/>
+            <div className="node-edit node-action" onClick={this.edit.bind(this)}></div>
+            <div className="node-delete node-action delete" onClick={this.remove.bind(this)}></div>
+            <div className="drag-start connect"></div>
+            <jtk-source port-type="source" filter=".connect"/>
             <jtk-target port-type="target"/>
         </div>
     }
@@ -655,24 +645,20 @@ export class ActionComponent extends BaseEditableComponent {
 
     render() {
 
-        const obj = this.state;
+        const obj = this.node.data;
 
         return <div style={{width:obj.w + 'px', height:obj.h + 'px'}} className="flowchart-object flowchart-action">
             <div style={{position:'relative'}}>
-                <div className="node-edit node-action" onClick={this.edit.bind(this)}>
-                    <i className="fa fa-pencil-square-o"/>
-                </div>
-                <div className="node-delete node-action" onClick={this.remove.bind(this)}>
-                    <i className="fa fa-times"/>
-                </div>
                 <svg width={obj.w} height={obj.h}>
-                    <rect x={0} y={0} width={obj.w} height={obj.h} className="outer drag-start"/>
                     <rect x={10} y={10} width={obj.w-20} height={obj.h-20} className="inner"/>
                     <text textAnchor="middle" x={obj.w/2} y={obj.h/2} dominantBaseline="central">{obj.text}</text>
                 </svg>
             </div>
+            <div className="node-edit node-action" onClick={this.edit.bind(this)}></div>
+            <div className="node-delete node-action delete" onClick={this.remove.bind(this)}></div>
+            <div className="drag-start connect"></div>
             <jtk-target port-type="target"/>
-            <jtk-source port-type="source" filter=".outer"/>
+            <jtk-source port-type="source" filter=".connect"/>
         </div>
     }
 }
@@ -982,8 +968,7 @@ There are two parts to this:
  
 #### DragDropNodeSource component declaration
  
-We declare a `DragDropNodeSource` component in `drag-drop-node-source.jsx`. This component extends the `JsPlumbToolkitDragDropComponent` which
-is provided in the `jsplumbtoolkit-react-drop` package. The source for this component is:
+We declare a `DragDropNodeSource` component in `drag-drop-node-source.jsx`. This component extends the `JsPlumbToolkitDragDropComponent` which is provided in the `jsplumbtoolkit-react-drop` package. The source for this component is:
 
 ```javascript
 import React from 'react';
