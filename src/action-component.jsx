@@ -22,7 +22,7 @@ export class ActionComponent extends BaseEditableComponent {
                 </svg>
             </div>
             <div className="node-edit node-action" onClick={this.edit.bind(this)}></div>
-            <div className="node-delete node-action" onClick={this.remove.bind(this)}></div>
+            <div className="node-delete node-action delete" onClick={this.remove.bind(this)}></div>
             <div className="drag-start connect"></div>
             <jtk-target port-type="target"/>
             <jtk-source port-type="source" filter=".connect"/>
