@@ -2,14 +2,14 @@ import * as React from 'react'
 
 import { Surface, BrowserUI} from "@jsplumbtoolkit/browser-ui"
 import * as UndoRedo from "@jsplumbtoolkit/undo-redo"
-import {jsPlumbToolkitUndoRedoManager} from "@jsplumbtoolkit/undo-redo"
+import {UndoRedoManager} from "@jsplumbtoolkit/undo-redo"
 
 export class ControlsComponent extends React.Component<any, any> {
 
     surface:Surface
     toolkit:BrowserUI
     _container:HTMLElement
-    undoManager:jsPlumbToolkitUndoRedoManager
+    undoManager:UndoRedoManager
 
     constructor(props:any) {
         super(props)
@@ -29,7 +29,7 @@ export class ControlsComponent extends React.Component<any, any> {
     initialize(surface:Surface) {
         this.surface = surface
         this.toolkit = surface.toolkitInstance
-        this.undoManager = UndoRedo.createUndoRedoManager({
+        this.undoManager = UndoRedo.newInstance({
             surface:this.surface,
             compound:true,
             onChange:(mgr:any, undoCount:number, redoCount:number) => {

@@ -26,7 +26,7 @@ ready(() => {
 
 // ------------------------- dialogs ------------------------------------------------------------
 
-    const dialogs = Dialogs.createDialogManager({
+    const dialogs = Dialogs.newInstance({
         selector: ".dlg"
     })
 

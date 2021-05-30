@@ -1,7 +1,7 @@
 import path from 'path';
 import { Configuration } from 'webpack';
 
-const webpackConfig = (): Configuration => ({
+const webpackConfig = ()=> ({
   entry: './src/index.tsx',
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
