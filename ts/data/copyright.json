@@ -1,0 +1,403 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "action",
+      "text": "Select Material",
+      "left": -327,
+      "top": -510,
+      "w": 232.96973588419212,
+      "h": 118.0139962771496
+    },
+    {
+      "id": "2",
+      "type": "question",
+      "text": "Is it in the public domain?",
+      "left": -319,
+      "top": -253,
+      "w": 215.65338001994235,
+      "h": 155.05215092178145
+    },
+    {
+      "id": "3",
+      "type": "question",
+      "text": "Is it Creative Commons?",
+      "left": 76,
+      "top": -260,
+      "w": 213.12823805585487,
+      "h": 169.03499069287395
+    },
+    {
+      "id": "4",
+      "type": "question",
+      "text": "Is it available from the publisher?",
+      "left": 345,
+      "top": -105,
+      "w": 252.43124612203076,
+      "h": 209.67599751809973
+    },
+    {
+      "id": "5",
+      "type": "question",
+      "text": "Can it be linked online?",
+      "left": 181,
+      "top": 221,
+      "w": 203.20748914168627,
+      "h": 140.68999379524934
+    },
+    {
+      "id": "6",
+      "type": "action",
+      "text": "Provide link to material",
+      "left": -93,
+      "top": 423,
+      "w": 203.2074891416862,
+      "h": 122.26574581179327
+    },
+    {
+      "id": "7",
+      "type": "action",
+      "text": "Send request to IPO for usage permission",
+      "left": 464,
+      "top": 231,
+      "w": 282.89916571377125,
+      "h": 120.79486387020825
+    },
+    {
+      "id": "8",
+      "type": "action",
+      "text": "Review license and comply with terms",
+      "left": -147,
+      "top": 85,
+      "w": 309.5012275077787,
+      "h": 143.52449348501182
+    },
+    {
+      "id": "9",
+      "type": "question",
+      "text": "Can IPO identify the rights holder?",
+      "left": 477,
+      "top": 469,
+      "w": 257.5233975274207,
+      "h": 179.15913069881458
+    },
+    {
+      "id": "10",
+      "type": "output",
+      "text": "Copyright cleared",
+      "left": -351,
+      "top": 641,
+      "w": 280.3615888951362,
+      "h": 139.82669000997112
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "target": "2",
+      "data": {}
+    },
+    {
+      "source": "2",
+      "target": "10",
+      "data": {
+        "label": "yes",
+        "type": "response"
+      },
+      "geometry": {
+        "segments": [
+          {
+            "x":-349,
+            "y":-175.5
+          },
+          {
+            "x":-381,
+            "y":-175.5
+          },
+          {
+            "x":-381,
+            "y":711
+          }
+        ],
+        "source": {
+          "curX":-319,
+          "curY":-175.5,
+          "x":0,
+          "y":0.5,
+          "ox":-1,
+          "oy":0
+        },
+        "target": {
+          "curX":-351,
+          "curY":711,
+          "x":0,
+          "y":0.5,
+          "ox":-1,
+          "oy":0
+        }
+      }
+    },
+    {
+      "source": "2",
+      "target": "3",
+      "data": {
+        "label": "no",
+        "type": "response"
+      }
+    },
+    {
+      "source": "3",
+      "target": "4",
+      "data": {
+        "label": "no",
+        "type": "response"
+      }
+    },
+    {
+      "source": "3",
+      "target": "8",
+      "data": {
+        "label": "yes",
+        "type": "response"
+      }
+    },
+    {
+      "source": "4",
+      "target": "1",
+      "data": {
+        "label": "no",
+        "type": "response"
+      },
+      "geometry": {
+        "segments": [
+          {
+            "x":627,
+            "y":0
+          },
+          {
+            "x": 670.5734804550352,
+            "y": 0
+          },
+          {
+            "x": 670.5734804550352,
+            "y": -540
+          },
+          {
+            "x": -210.5,
+            "y": -540
+          }
+        ],
+        "source": {
+          "curX":597,
+          "curY":0,
+          "x":1,
+          "y":0.5,
+          "ox":1,
+          "oy":0
+        },
+        "target": {
+          "curX":-210.5,
+          "curY":-510,
+          "x":0.5,
+          "y":0,
+          "ox":0,
+          "oy":-1
+        }
+      }
+    },
+    {
+      "source": "4",
+      "target": "5",
+      "data": {
+        "label": "yes",
+        "type": "response"
+      }
+    },
+    {
+      "source": "6",
+      "target": "8",
+      "data": {
+        "label": "yes",
+        "type": "response"
+      }
+    },
+    {
+      "source": "5",
+      "target": "6",
+      "data": {
+        "label": "yes",
+        "type": "response"
+      },
+      "geometry": {
+        "segments": [
+          {
+            "x": 282.5,
+            "y": 392
+          },
+          {
+            "x": 282.5,
+            "y": 534
+          },
+          {
+            "x": 266,
+            "y": 534
+          }
+        ],
+        "source": {
+          "curX":282.5,
+          "curY":362,
+          "x":0.5,
+          "y":1,
+          "ox":0,
+          "oy":1
+        },
+        "target": {
+          "curX":236,
+          "curY":534,
+          "x":1,
+          "y":0.5,
+          "ox":1,
+          "oy":0
+        }
+      }
+    },
+    {
+      "source": "5",
+      "target": "7",
+      "data": {
+        "label": "no",
+        "type": "response"
+      }
+    },
+    {
+      "source": "7",
+      "target": "9",
+      "data": {
+      }
+    },
+    {
+      "source": "8",
+      "target": "10",
+      "data": {
+      },
+      "geometry": {
+        "segments": [
+          {
+            "x": -177,
+            "y": 157
+          },
+          {
+            "x": -211.4172498448812,
+            "y": 157
+          },
+          {
+            "x": -211.4172498448812,
+            "y": 611.2587476732185
+          }
+        ],
+        "source": {
+          "curX":-147,
+          "curY":157,
+          "x":0,
+          "y":0.5,
+          "ox":-1,
+          "oy":0
+        },
+        "target": {
+          "curX":-211.4172498448812,
+          "curY":641.2587476732185,
+          "x":0.5,
+          "y":0,
+          "ox":0,
+          "oy":-1
+        }
+      }
+    },
+    {
+      "source": "9",
+      "target": "1",
+      "data": {
+        "label": "no",
+        "type": "response"
+      },
+      "geometry": {
+        "segments": [
+          {
+            "x": 765,
+            "y": 558.5
+          },
+          {
+            "x": 776.4915824915824,
+            "y": 558.5
+          },
+          {
+            "x": 776.4915824915824,
+            "y": -451
+          },
+          {
+            "x": -64,
+            "y": -451
+          }
+        ],
+        "source": {
+          "curX":735,
+          "curY":558.5,
+          "x":1,
+          "y":0.5,
+          "ox":1,
+          "oy":0
+        },
+        "target": {
+          "curX":-94,
+          "curY":-451,
+          "x":1,
+          "y":0.5,
+          "ox":1,
+          "oy":0
+        }
+      }
+    },
+    {
+      "source": "9",
+      "target": "10",
+      "data": {
+        "label": "yes",
+        "type": "response"
+      },
+      "geometry": {
+        "segments": [
+          {
+            "x": 612,
+            "y": 596
+          },
+          {
+            "x": 612,
+            "y": 679
+          },
+          {
+            "x": 133,
+            "y": 679
+          }
+        ],
+        "source": {
+          "curX":612,
+          "curY":566,
+          "x":0.5,
+          "y":1,
+          "ox":0,
+          "oy":1
+        },
+        "target": {
+          "curX":103,
+          "curY":679,
+          "x":1,
+          "y":0.5,
+          "ox":1,
+          "oy":0
+        }
+      }
+    }
+  ],
+  "ports": [],
+  "groups": []
+}
