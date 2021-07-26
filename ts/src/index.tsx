@@ -1,25 +1,44 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { JsPlumbToolkitMiniviewComponent, JsPlumbToolkitSurfaceComponent }  from '@jsplumbtoolkit/react'
-import {BrowserUI, ready, newInstance, Surface, DrawingToolsPlugin} from '@jsplumbtoolkit/browser-ui'
+import { JsPlumbToolkitMiniviewComponent, JsPlumbToolkitSurfaceComponent, BrowserUIReact }  from '@jsplumbtoolkit/browser-ui-react'
+import { ArrowOverlay, BlankEndpoint, AnchorLocations, LabelOverlay } from "@jsplumb/core"
+import {Surface, EVENT_CANVAS_CLICK, EVENT_CLICK, EVENT_DBL_CLICK, EVENT_TAP } from '@jsplumbtoolkit/browser-ui'
 import * as Dialogs from "@jsplumbtoolkit/dialogs"
-import {Edge, uuid, Vertex} from "@jsplumbtoolkit/core"
+import {Edge, Vertex, EVENT_EDGE_ADDED, AbsoluteLayout, Node, uuid} from "@jsplumbtoolkit/core"
+
 import * as ConnectorEditors from "@jsplumbtoolkit/connector-editors"
 
-import { QuestionComponent } from './question-component';
-import { ActionComponent } from './action-component';
-import { OutputComponent } from './output-component';
-import { StartComponent } from './start-component';
+import * as OrthogonalConnectorEditor from "@jsplumbtoolkit/connector-editors-orthogonal"
 
-import DragDropNodeSource from './drag-drop-node-source';
+import { OrthogonalConnector } from "@jsplumbtoolkit/connector-orthogonal"
+import { DrawingToolsPlugin } from "@jsplumbtoolkit/browser-ui-plugin-drawing-tools"
 
-import { ControlsComponent } from './controls-component';
-import { DatasetComponent } from './dataset-component';
+
+import { QuestionComponent } from './question-component'
+import { ActionComponent } from './action-component'
+import { OutputComponent } from './output-component'
+import { StartComponent } from './start-component'
+
+import DragDropNodeSource from './drag-drop-node-source'
+
+import { ControlsComponent } from './controls-component'
+import { DatasetComponent } from './dataset-component'
 
 import {EdgePathEditor} from "@jsplumbtoolkit/connector-editors"
+import {LassoPlugin} from "@jsplumbtoolkit/browser-ui-plugin-lasso"
 
-ready(() => {
+OrthogonalConnectorEditor.initialize()
+
+const START = "start"
+const OUTPUT = "output"
+const ACTION = "action"
+const QUESTION = "question"
+const SELECTABLE = "selectable"
+const DEFAULT = "default"
+const SOURCE = "source"
+const TARGET = "target"
+const CONNECTION = "connection"
 
     const mainElement = document.querySelector("#jtk-demo-flowchart"),
         nodePaletteElement = mainElement.querySelector(".node-palette");
@@ -32,7 +51,7 @@ ready(() => {
 
     class DemoComponent extends React.Component {
 
-        toolkit:BrowserUI
+        toolkit:BrowserUIReact
         view:any
         surface:Surface
         controls:any
@@ -41,7 +60,7 @@ ready(() => {
 
         constructor(props:any) {
             super(props)
-            this.toolkit = newInstance({
+            this.toolkit = new BrowserUIReact({
                 nodeFactory: (type:string, data:Record<string, any>, callback:Function) => {
                     dialogs.show({
                         id: "dlgText",
@@ -67,46 +86,46 @@ ready(() => {
                 },
                 beforeStartConnect:(source:Vertex, edgeType:string) => {
                     // limit edges from start node to 1. if any other type of node, return
-                    return (source.data.type === "start" && source.getEdges().length > 0) ? false : { label:"..." }
+                    return (source.data.type === START && source.getEdges().length > 0) ? false : { label:"..." }
                 }
             });
 
             this.view = {
                 nodes: {
-                    "start": {
+                    [START]: {
                        jsx:(ctx:any) => { return <StartComponent ctx={ctx} /> }
                     },
-                    "selectable": {
+                    [SELECTABLE]: {
                         events: {
-                            tap:  (params:any) => {
-                                this.toolkit.toggleSelection(params.node);
+                            [EVENT_TAP]:  (params:{obj:Node}) => {
+                                this.toolkit.toggleSelection(params.obj);
                             }
                         }
                     },
-                    "question": {
-                        parent: "selectable",
+                    [QUESTION]: {
+                        parent: SELECTABLE,
                         jsx:(ctx:any) => { return <QuestionComponent ctx={ctx} /> }
                     },
-                    "action": {
-                        parent: "selectable",
+                    [ACTION]: {
+                        parent: SELECTABLE,
                         jsx:(ctx:any) => { return <ActionComponent ctx={ctx} /> }
                     },
-                    "output":{
-                        parent:"selectable",
+                    [OUTPUT]:{
+                        parent:SELECTABLE,
                         jsx:(ctx:any) => { return <OutputComponent ctx={ctx} /> }
                     }
                 },
                 // There are two edge types defined - 'yes' and 'no', sharing a common
                 // parent.
                 edges: {
-                    "default": {
-                        anchor:"AutoDefault",
-                        endpoint:"Blank",
-                        connector: { type:"Orthogonal", options:{ cornerRadius: 5 } },
+                    [DEFAULT]: {
+                        anchor:AnchorLocations.AutoDefault,
+                        endpoint:BlankEndpoint.type,
+                        connector: { type:OrthogonalConnector.type, options:{ cornerRadius: 5 } },
                         paintStyle: { strokeWidth: 2, stroke: "rgb(132, 172, 179)", outlineWidth: 3, outlineStroke: "transparent" },	//	paint style for this edge type.
                         hoverPaintStyle: { strokeWidth: 2, stroke: "rgb(67,67,67)" }, // hover paint style for this edge type.
                         events: {
-                            "dblclick":  (params:any) => {
+                            [EVENT_DBL_CLICK]:  (params:any) => {
                                 dialogs.show({
                                     id: "dlgConfirm",
                                     data: {
@@ -117,20 +136,20 @@ ready(() => {
                                     }
                                 })
                             },
-                            "click": (params:any) => {
+                            [EVENT_CLICK]: (params:any) => {
                                 this.pathEditor.startEditing(params.edge, {})
                             }
                         },
                         overlays: [
-                            { type:"Arrow", options:{ location: 1, width: 10, length: 10 }},
-                            { type:"Arrow", options:{ location: 0.3, width: 10, length: 10 }}
+                            { type:ArrowOverlay.type, options:{ location: 1, width: 10, length: 10 }},
+                            { type:ArrowOverlay.type, options:{ location: 0.3, width: 10, length: 10 }}
                         ]
                     },
-                    "connection":{
-                        parent:"default",
+                    [CONNECTION]:{
+                        parent:DEFAULT,
                         overlays:[
                             {
-                                type: "Label",
+                                type: LabelOverlay.type,
                                 options:{
                                     label: "${label}",
                                     events:{
@@ -144,19 +163,16 @@ ready(() => {
                     }
                 },
                 ports: {
-                    "start": {
-                        edgeType: "default"
+                    [START]: {
+                        edgeType: DEFAULT
                     },
-                    "source": {
+                    [SOURCE]: {
                         maxConnections: -1,
-                            edgeType: "connection"
+                        edgeType: CONNECTION
                     },
-                    "target": {
+                    [TARGET]: {
                         maxConnections: -1,
-                            isTarget: true,
-                            dropOptions: {
-                            hoverClass: "connection-drop"
-                        }
+                        isTarget: true
                     }
                 }
             };
@@ -164,14 +180,14 @@ ready(() => {
             this.renderParams = {
                 // Layout the nodes using an absolute layout
                 layout: {
-                    type: "Absolute"
+                    type: AbsoluteLayout.type
                 },
                 events: {
-                    canvasClick: (e:Event) => {
+                    [EVENT_CANVAS_CLICK]: (e:Event) => {
                         this.toolkit.clearSelection()
                         this.pathEditor.stopEditing()
                     },
-                    edgeAdded:(params:{edge:Edge, addedByMouse?:boolean}) => {
+                    [EVENT_EDGE_ADDED]:(params:{edge:Edge, addedByMouse?:boolean}) => {
                         if (params.addedByMouse) {
                             this._editLabel(params.edge, true);
                         }
@@ -184,7 +200,7 @@ ready(() => {
                 },
                 zoomToFit:true,
                 plugins:[
-                    DrawingToolsPlugin.type
+                    DrawingToolsPlugin.type, LassoPlugin.type
                 ]
             };
         }
@@ -250,4 +266,3 @@ ready(() => {
 
     ReactDOM.render(<DemoComponent/>, document.querySelector(".jtk-demo-canvas"))
 
-});

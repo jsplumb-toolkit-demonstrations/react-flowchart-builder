@@ -1,8 +1,6 @@
 import * as React from 'react'
 
 import { Surface, BrowserUI} from "@jsplumbtoolkit/browser-ui"
-import * as UndoRedo from "@jsplumbtoolkit/undo-redo"
-import {UndoRedoManager} from "@jsplumbtoolkit/undo-redo"
 
 export class ControlsComponent extends React.Component<any, any> {
 
@@ -29,18 +27,18 @@ export class ControlsComponent extends React.Component<any, any> {
     initialize(surface:Surface) {
         this.surface = surface
         this.toolkit = surface.toolkitInstance
-        this.undoManager = UndoRedo.newInstance({
-            surface:this.surface,
-            compound:true,
-            onChange:(mgr:any, undoCount:number, redoCount:number) => {
-                this._container.setAttribute("can-undo", undoCount > 0 ? "true" : "false")
-                this._container.setAttribute("can-redo", redoCount > 0 ? "true" : "false")
-            }
-        });
+        // this.undoManager = NewUndoRedoManager({
+        //     surface:this.surface,
+        //     compound:true,
+        //     onChange:(mgr:any, undoCount:number, redoCount:number) => {
+        //         this._container.setAttribute("can-undo", undoCount > 0 ? "true" : "false")
+        //         this._container.setAttribute("can-redo", redoCount > 0 ? "true" : "false")
+        //     }
+        // });
 
         this.surface.bind("mode", (mode) => {
-            // this.surface.removeClass(this._container.querySelectorAll("[data-mode]"), "selected-mode");
-            // this.surface.addClass(this._container.querySelectorAll("[data-mode='" + mode + "']"), "selected-mode");
+            this.surface.removeClass(this._container.querySelectorAll("[data-mode]"), "selected-mode");
+            this.surface.addClass(this._container.querySelectorAll("[data-mode='" + mode + "']"), "selected-mode");
         });
     }
 

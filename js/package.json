@@ -1,6 +1,6 @@
 {
   "name": "jsplumbtoolkit-react",
-  "version": "1.8.0",
+  "version": "5.0.0",
   "description": "Integration between jsPlumb Toolkit and React",
   "main": "index.js",
   "author": "jsPlumb <hello@jsplumbtoolkit.com> (https://jsplumbtoolkit.com)",
@@ -12,16 +12,15 @@
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "@jsplumbtoolkit/core": "file:../jsplumbtoolkit-core.tgz",
-    "@jsplumbtoolkit/browser-ui": "file:../jsplumbtoolkit-browser-ui.tgz",
-    "@jsplumbtoolkit/react": "file:../jsplumbtoolkit-react.tgz",
-    "@jsplumbtoolkit/undo-redo": "file:../jsplumbtoolkit-undo-redo.tgz",
-    "@jsplumbtoolkit/drop": "file:../jsplumbtoolkit-drop.tgz",
-    "@jsplumbtoolkit/react-drop": "file:../jsplumbtoolkit-react-drop.tgz",
-    "@jsplumbtoolkit/dialogs": "file:../jsplumbtoolkit-dialogs.tgz",
-    "@jsplumb/json-syntax-highlighter": "^1.0.2",
-    "@jsplumb/toolkit-demo-support": "^1.0.0",
-    "@jsplumbtoolkit/connector-editors": "file:../jsplumbtoolkit-connector-editors.tgz"
+    "@jsplumbtoolkit/browser-ui": "^5.0.0-RC1",
+    "@jsplumbtoolkit/react": "^5.0.0-RC1",
+    "@jsplumbtoolkit/react-drop": "^5.0.0-RC1",
+    "@jsplumbtoolkit/dialogs": "^5.0.0-RC1",
+    "@jsplumbtoolkit/connector-editors-orthogonal": "^5.0.0-RC1",
+    "@jsplumbtoolkit/plugin-drawing-tools": "^5.0.0-RC1",
+    "@jsplumbtoolkit/plugin-lasso": "^5.0.0-RC1",
+    "@jsplumb/json-syntax-highlighter": "^1.0.4",
+    "@jsplumb/toolkit-demo-support": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",

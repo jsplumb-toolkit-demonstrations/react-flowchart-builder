@@ -1,7 +1,5 @@
 import React from 'react';
 
-import * as UndoRedo  from '@jsplumbtoolkit/undo-redo';
-
 export class ControlsComponent extends React.Component {
 
     constructor(props) {
@@ -51,11 +49,11 @@ export class ControlsComponent extends React.Component {
     }
 
     undo() {
-        this.undoManager.undo();
+        this.toolkit.undo();
     }
 
     redo() {
-        this.undoManager.redo();
+        this.toolkit.redo();
     }
 
     clear() {

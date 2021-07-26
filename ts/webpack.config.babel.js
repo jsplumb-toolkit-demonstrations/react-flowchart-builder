@@ -11,7 +11,7 @@ const webpackConfig = ()=> ({
     filename: 'bundle.js',
     publicPath: 'dist',
   },
-  mode: 'production',
+  mode: 'development',
   module: {
     rules: [
       {
