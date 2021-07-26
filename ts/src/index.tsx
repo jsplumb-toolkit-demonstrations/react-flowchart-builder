@@ -274,7 +274,7 @@ const RESPONSE = "response"
 
             this.pathEditor = ConnectorEditors.newInstance(this.surface)
 
-            this.toolkit.load({url:"../data/copyright.json"})
+            this.toolkit.load({url:"data/copyright.json"})
             this.controls.initialize(this.surface)
 
             ReactDOM.render(
