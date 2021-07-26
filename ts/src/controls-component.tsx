@@ -1,13 +1,13 @@
 import * as React from 'react'
 
-import { Surface, BrowserUI} from "@jsplumbtoolkit/browser-ui"
+import {Surface, SurfaceMode} from "@jsplumbtoolkit/browser-ui"
+import {BrowserUIReact} from "@jsplumbtoolkit/browser-ui-react"
 
 export class ControlsComponent extends React.Component<any, any> {
 
     surface:Surface
-    toolkit:BrowserUI
+    toolkit:BrowserUIReact
     _container:HTMLElement
-    undoManager:UndoRedoManager
 
     constructor(props:any) {
         super(props)
@@ -48,19 +48,19 @@ export class ControlsComponent extends React.Component<any, any> {
     }
 
     panMode() {
-        this.surface.setMode("pan")
+        this.surface.setMode(SurfaceMode.PAN)
     }
 
     selectMode() {
-        this.surface.setMode("select")
+        this.surface.setMode(SurfaceMode.SELECT)
     }
 
     undo() {
-        this.undoManager.undo()
+        this.toolkit.undo()
     }
 
     redo() {
-        this.undoManager.redo()
+        this.toolkit.redo()
     }
 
     clear() {

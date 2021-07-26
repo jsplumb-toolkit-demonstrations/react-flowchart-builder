@@ -1,13 +1,12 @@
 import * as React from 'react'
-import { BaseEditableComponent } from"./base-component"
-import {PropsWithContext} from "@jsplumbtoolkit/react"
+import {BaseComponentProps, BaseEditableComponent} from "./base-component"
 
 /**
  * Component used to render an output node.
  */
-export class OutputComponent extends BaseEditableComponent<PropsWithContext, any> {
+export class OutputComponent extends BaseEditableComponent<BaseComponentProps, any> {
 
-    constructor(props:any) {
+    constructor(props:BaseComponentProps) {
         super(props)
     }
 
@@ -15,7 +14,7 @@ export class OutputComponent extends BaseEditableComponent<PropsWithContext, any
 
         const obj = this.node.data;
 
-        return <div style={{width:obj.w + 'px', height:obj.h + 'px'}} className="flowchart-object flowchart-output">
+        return <div style={{width:obj.w + 'px', height:obj.h + 'px'}} className="flowchart-object flowchart-output" data-jtk-target="true" data-jtk-port-type="target">
             <div style={{position:'relative'}}>
                 <svg width={obj.w} height={obj.h}>
                     <rect x={0} y={0} width={obj.w} height={obj.h}/>
@@ -24,7 +23,6 @@ export class OutputComponent extends BaseEditableComponent<PropsWithContext, any
             </div>
             <div className="node-edit node-action" onClick={this.edit.bind(this)}></div>
             <div className="node-delete node-action" onClick={this.remove.bind(this)}></div>
-            <jtk-target port-type="target"/>
         </div>
     }
 }

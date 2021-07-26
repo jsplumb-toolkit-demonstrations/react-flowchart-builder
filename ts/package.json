@@ -7,20 +7,18 @@
   "license": "Commercial",
   "scripts": {
     "build": "npx webpack",
-    "start": "webpack-dev-server"
+    "start": "npx webpack serve"
   },
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "@jsplumbtoolkit/browser-ui": "^5.0.0-RC1",
     "@jsplumbtoolkit/browser-ui-react": "^5.0.0-RC1",
     "@jsplumbtoolkit/browser-ui-react-drop": "^5.0.0-RC1",
     "@jsplumbtoolkit/dialogs": "^5.0.0-RC1",
     "@jsplumbtoolkit/connector-editors-orthogonal": "^5.0.0-RC1",
     "@jsplumbtoolkit/browser-ui-plugin-drawing-tools": "^5.0.0-RC1",
     "@jsplumbtoolkit/browser-ui-plugin-lasso": "^5.0.0-RC1",
-    "@jsplumb/json-syntax-highlighter": "^1.0.4",
-    "@jsplumb/toolkit-demo-support": "^1.0.0"
+    "jsplumbtoolkit-demo-support": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

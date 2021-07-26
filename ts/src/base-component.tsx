@@ -1,31 +1,38 @@
-import { BaseNodeComponent, PropsWithContext }  from '@jsplumbtoolkit/react'
-import { Dialogs } from '@jsplumbtoolkit/dialogs'
+import { BaseNodeComponent, PropsWithContext }  from '@jsplumbtoolkit/browser-ui-react'
+//import { Dialogs } from '@jsplumbtoolkit/dialogs'
 
 /**
  * The superclass for node types that wish to support label edit and removal - Action, Output and Question nodes.
  */
-export class BaseEditableComponent<P extends PropsWithContext, S> extends BaseNodeComponent<P, S> {
 
-    constructor(props:P) {
+export interface BaseComponentProps extends PropsWithContext {
+    dlg:any
+}
+
+export class BaseEditableComponent<B extends BaseComponentProps, S> extends BaseNodeComponent<BaseComponentProps, S> {
+
+    dialogManager:any
+
+    constructor(props:B) {
         super(props)
+        this.dialogManager = props.dlg
     }
 
     remove() {
         if (this.node) {
-            // Dialogs.show({
-            //     id: "dlgConfirm",
-            //     data: {
-            //         msg: "Delete '" + this.node.data.text + "'"
-            //     },
-            //     onOK: () => {
-            //         this.toolkit.removeNode(this.node);
-            //     }
-            // });
+            this.dialogManager.confirmDelete(this.node.data, () => this.toolkit.removeNode(this.node))
         }
     }
 
     edit() {
         if (this.node) {
+            this.dialogManager.editName(this.node.data, (data) => {
+                if (data.text && data.text.length > 2) {
+                    // if name is at least 2 chars long, update the underlying data and
+                    // update the UI.
+                    this.toolkit.updateNode(this.node, data);
+                }
+            })
             // Dialogs.show({
             //     id: "dlgText",
             //     data: this.node.data,
