@@ -1,17 +1,17 @@
 import { BaseNodeComponent, PropsWithContext }  from '@jsplumbtoolkit/browser-ui-react'
-//import { Dialogs } from '@jsplumbtoolkit/dialogs'
+import {DialogManager} from "./index"
 
 /**
  * The superclass for node types that wish to support label edit and removal - Action, Output and Question nodes.
  */
 
 export interface BaseComponentProps extends PropsWithContext {
-    dlg:any
+    dlg:DialogManager
 }
 
 export class BaseEditableComponent<B extends BaseComponentProps, S> extends BaseNodeComponent<BaseComponentProps, S> {
 
-    dialogManager:any
+    dialogManager:DialogManager
 
     constructor(props:B) {
         super(props)
@@ -33,18 +33,6 @@ export class BaseEditableComponent<B extends BaseComponentProps, S> extends Base
                     this.toolkit.updateNode(this.node, data);
                 }
             })
-            // Dialogs.show({
-            //     id: "dlgText",
-            //     data: this.node.data,
-            //     title: "Edit " + this.node.data.type + " name",
-            //     onOK:  (data) => {
-            //         if (data.text && data.text.length > 2) {
-            //             // if name is at least 2 chars long, update the underlying data and
-            //             // update the UI.
-            //             this.toolkit.updateNode(this.node, data);
-            //         }
-            //     }
-            // });
         }
     }
 }
