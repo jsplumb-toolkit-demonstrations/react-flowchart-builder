@@ -1,12 +1,24 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { JsPlumbToolkitMiniviewComponent, JsPlumbToolkitSurfaceComponent, BrowserUIReact }  from '@jsplumbtoolkit/browser-ui-react'
-import { ArrowOverlay, BlankEndpoint, LabelOverlay } from "@jsplumb/core"
-import { AnchorLocations } from "@jsplumb/common"
-import {Surface, EVENT_CANVAS_CLICK, EVENT_CLICK, EVENT_DBL_CLICK, EVENT_TAP } from '@jsplumbtoolkit/browser-ui'
+import {
+    JsPlumbToolkitMiniviewComponent,
+    JsPlumbToolkitSurfaceComponent,
+    BrowserUIReact,
+    Surface,
+    EVENT_CANVAS_CLICK,
+    EVENT_CLICK,
+    EVENT_DBL_CLICK,
+    EVENT_TAP,
+    ArrowOverlay,
+    BlankEndpoint,
+    LabelOverlay,
+    AnchorLocations
+}  from '@jsplumbtoolkit/browser-ui-react'
+
+
 import * as Dialogs from "@jsplumbtoolkit/dialogs"
-import {Edge, Vertex, EVENT_EDGE_ADDED, AbsoluteLayout, Node, uuid, ObjectData} from "@jsplumbtoolkit/core"
+import {Edge, Vertex, AbsoluteLayout, Node, uuid, ObjectData} from "@jsplumbtoolkit/core"
 
 import * as ConnectorEditors from "@jsplumbtoolkit/connector-editors"
 
@@ -14,7 +26,6 @@ import * as OrthogonalConnectorEditor from "@jsplumbtoolkit/connector-editors-or
 
 import { OrthogonalConnector } from "@jsplumbtoolkit/connector-orthogonal"
 import { DrawingToolsPlugin } from "@jsplumbtoolkit/browser-ui-plugin-drawing-tools"
-
 
 import { QuestionComponent } from './question-component'
 import { ActionComponent } from './action-component'
@@ -41,8 +52,14 @@ const SOURCE = "source"
 const TARGET = "target"
 const RESPONSE = "response"
 
-    const mainElement = document.querySelector("#jtk-demo-flowchart"),
+const mainElement = document.querySelector("#jtk-demo-flowchart"),
         nodePaletteElement = mainElement.querySelector(".node-palette");
+
+export type DialogManager = {
+    showEdgeLabelDialog: (data: ObjectData, callback: Function, abort: CancelFunction) => any,
+    confirmDelete:(data:ObjectData, callback:CommitFunction) => any,
+    editName:(data:ObjectData, callback:CommitFunction) => any
+}
 
 // ------------------------- dialogs ------------------------------------------------------------
 
@@ -67,7 +84,7 @@ const RESPONSE = "response"
         }
     })
 
-    const dialogManager = {
+    const dialogManager:DialogManager = {
         showEdgeLabelDialog: (data: ObjectData, callback: Function, abort: CancelFunction) => {
             dialogs.show({
                 id: 'dlgText',
