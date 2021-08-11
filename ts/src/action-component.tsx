@@ -25,7 +25,7 @@ export class ActionComponent extends BaseEditableComponent<ActionProps, ActionSt
         return <div style={{width:obj.w + 'px', height:obj.h + 'px'}} className="flowchart-object flowchart-action" data-jtk-target="true" data-jtk-port-type="target">
             <div style={{position:'relative'}}>
                 <svg width={obj.w} height={obj.h}>
-                    <rect x={10} y={10} width={obj.w-20} height={obj.h-20} className="inner"/>
+                    <rect x={10} y={10} width={obj.w-20} height={obj.h-20} className="inner" rx={5} ry={5}/>
                     <text textAnchor="middle" x={obj.w/2} y={obj.h/2} dominantBaseline="central">{obj.text}</text>
                 </svg>
             </div>
