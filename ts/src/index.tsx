@@ -65,22 +65,21 @@ export type DialogManager = {
 
     const dialogs = Dialogs.newInstance({
         dialogs: {
-            dlgText: [
-                '<input type="text" size="50" jtk-focus jtk-att="text" value="${text}" jtk-commit="true"/>',
-                'Enter Text',
-                true
-
-            ],
-            dlgConfirm: [
-                '${msg}',
-                'Please Confirm',
-                true
-            ],
-            dlgMessage: [
-                '${msg}',
-                'Message',
-                false
-            ]
+            dlgText: {
+                template:'<input type="text" size="50" jtk-focus jtk-att="text" value="${text}" jtk-commit="true"/>',
+                title:'Enter Text',
+                cancelable:true
+            },
+            dlgConfirm: {
+                template:'${msg}',
+                title:'Please Confirm',
+                cancelable:true
+            },
+            dlgMessage: {
+                template:'${msg}',
+                title:'Message',
+                cancelable:false
+            }
         }
     })
 
@@ -267,7 +266,16 @@ export type DialogManager = {
                 zoomToFit:true,
                 plugins:[
                     DrawingToolsPlugin.type, LassoPlugin.type
-                ]
+                ],
+                grid:{
+                    size:{
+                        w: 20,
+                        h: 20
+                    }
+                },
+                magnetize: {
+                    afterDrag: true
+                }
             };
         }
 
@@ -281,8 +289,8 @@ export type DialogManager = {
 
         dataGenerator (el:Element) {
             return {
-                w:120,
-                h:120,
+                w:el.getAttribute("data-width"),
+                h:el.getAttribute("data-height"),
                 type:el.getAttribute("data-node-type")
             }
         }
