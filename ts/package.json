@@ -12,12 +12,12 @@
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "@jsplumbtoolkit/browser-ui-react": "^5.0.0-RC17",
-    "@jsplumbtoolkit/browser-ui-react-drop": "^5.0.0-RC17",
-    "@jsplumbtoolkit/dialogs": "^5.0.0-RC17",
-    "@jsplumbtoolkit/connector-editors-orthogonal": "^5.0.0-RC17",
-    "@jsplumbtoolkit/browser-ui-plugin-drawing-tools": "^5.0.0-RC17",
-    "@jsplumbtoolkit/browser-ui-plugin-lasso": "^5.0.0-RC17",
+    "@jsplumbtoolkit/browser-ui-react": "^5.0.0",
+    "@jsplumbtoolkit/browser-ui-react-drop": "^5.0.0",
+    "@jsplumbtoolkit/dialogs": "^5.0.0",
+    "@jsplumbtoolkit/connector-editors-orthogonal": "^5.0.0",
+    "@jsplumbtoolkit/browser-ui-plugin-drawing-tools": "^5.0.0",
+    "@jsplumbtoolkit/browser-ui-plugin-lasso": "^5.0.0",
     "jsplumbtoolkit-demo-support": "^1.0.0"
   },
   "devDependencies": {
