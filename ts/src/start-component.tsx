@@ -1,13 +1,14 @@
-import React from 'react';
-import { BaseNodeComponent } from"jsplumbtoolkit-react";
+import * as React from 'react'
+import {BaseNodeComponent} from "@jsplumbtoolkit/browser-ui-react"
+import {BaseComponentProps} from "./base-component"
 
 /**
  * Component used to render a start node. Note that this component extends the Toolkit's BaseNodeComponent, whereas the others
  * extend the 'BaseEditableComponent' - the other node types can have their labels edited, or be removed, and this node type cannot.
  */
-export class StartComponent extends BaseNodeComponent {
+export class StartComponent extends BaseNodeComponent<BaseComponentProps, any> {
 
-    constructor(props) {
+    constructor(props:BaseComponentProps) {
         super(props)
     }
 
@@ -22,8 +23,7 @@ export class StartComponent extends BaseNodeComponent {
                     <text textAnchor="middle" x={obj.w / 2} y={ obj.h / 2 } dominantBaseline="central">{obj.text}</text>
                 </svg>
             </div>
-            <div className="drag-start connect"></div>
-            <jtk-source port-type="start" filter=".outer" filter-negate="true"/>
+            <div className="drag-start connect" data-jtk-source="true" data-jtk-port-type="source"></div>
         </div>
     }
 }

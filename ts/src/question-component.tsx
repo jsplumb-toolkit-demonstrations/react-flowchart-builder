@@ -1,20 +1,20 @@
-import React from 'react';
-import { BaseEditableComponent } from"./base-component.jsx";
+import * as React from 'react';
+import {BaseComponentProps, BaseEditableComponent} from "./base-component"
 
 /**
  * Component used to render a Question node.
  */
-export class QuestionComponent extends BaseEditableComponent {
+export class QuestionComponent extends BaseEditableComponent<BaseComponentProps, any> {
 
-    constructor(props) {
-        super(props);
+    constructor(props:BaseComponentProps) {
+        super(props)
     }
 
     render() {
 
         const obj = this.node.data;
 
-        return <div style={{width:obj.w + 'px', height:obj.h + 'px'}} className="flowchart-object flowchart-question">
+        return <div style={{width:obj.w + 'px', height:obj.h + 'px'}} className="flowchart-object flowchart-question" data-jtk-target="true" data-jtk-port-type="target">
             <div style={{position:'relative'}}>
 
                 <svg width={obj.w} height={obj.h}>
@@ -24,9 +24,7 @@ export class QuestionComponent extends BaseEditableComponent {
             </div>
             <div className="node-edit node-action" onClick={this.edit.bind(this)}></div>
             <div className="node-delete node-action delete" onClick={this.remove.bind(this)}></div>
-            <div className="drag-start connect"></div>
-            <jtk-source port-type="source" filter=".connect"/>
-            <jtk-target port-type="target"/>
+            <div className="drag-start connect" data-jtk-source="true" data-jtk-port-type="source"></div>
         </div>
     }
 }
