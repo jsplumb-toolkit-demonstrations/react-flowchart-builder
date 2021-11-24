@@ -17,12 +17,10 @@ export class StartComponent extends BaseNodeComponent<BaseComponentProps, any> {
         const obj = this.node.data;
 
         return <div style={{width:obj.w + 'px', height:obj.h + 'px'}} className="flowchart-object flowchart-start">
-            <div style={{position:'relative'}}>
-                <svg width={obj.w} height={obj.h}>
-                    <ellipse cx={obj.w / 2} cy={obj.h / 2} rx={(obj.w /2) - 10} ry={(obj.h/2) - 10} className="inner"/>
-                    <text textAnchor="middle" x={obj.w / 2} y={ obj.h / 2 } dominantBaseline="central">{obj.text}</text>
-                </svg>
-            </div>
+            <svg width={obj.w} height={obj.h}>
+                <ellipse cx={obj.w / 2} cy={obj.h / 2} rx={(obj.w /2) - 10} ry={(obj.h/2) - 10} className="inner"/>
+            </svg>
+            <span>{obj.text}</span>
             <div className="drag-start connect" data-jtk-source="true" data-jtk-port-type="source"></div>
         </div>
     }
