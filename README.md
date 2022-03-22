@@ -5,7 +5,48 @@ This is a port of the Flowchart Builder application that demonstrates the Toolki
 
 ![Flowchart Builder Demonstration](demo-flowchart.png)
 
-This page gives you an in-depth look at how the application is put together.
+
+You can see this demonstration in action here: [https://demo.jsplumbtoolkit.com/react-flowchart-builder/](https://demo.jsplumbtoolkit.com/react-flowchart-builder/)
+
+### Installation
+
+#### Licensees
+
+If you are a current licensee and you are using either jsPlumb's NPM repository or your own NPM repository to host the Toolkit packages, it will suffice to clone this application and simply run `npm i`
+
+If you are a current licensee who does not use an NPM repository to provision the Toolkit packages, you will need to clone the repository and then update `js/package.json` to set appropriate `file:..` URLs for the Toolkit packages.
+
+#### Evaluators
+
+Evaluators of the Toolkit should ensure they have followed the steps outlined here:
+
+[https://docs.jsplumbtoolkit.com/toolkit/5.x/lib/npm-repository](https://docs.jsplumbtoolkit.com/toolkit/5.x/lib/npm-repository)
+
+to configure their access to the jsPlumb NPM repository.
+
+Then simply clone the repo and run `npm i`.
+
+If you are not a current evaluator but you'd like to be, you can sign up for a 30 day trial here:
+[https://jsplumbtoolkit.com/contact?q=evaluate](https://jsplumbtoolkit.com/contact?q=evaluate)  
+
+### Building the app
+
+Once you've installed the dependencies, run this command:
+
+```javascript
+npm run build
+```
+
+The output will be written into the `dist` directory.
+
+
+
+
+
+
+
+### Implementation details
+
 
 <a name="babel-setup"></a>
 ### Babel Setup
@@ -19,10 +60,13 @@ These are the `package.json` entries we use:
 
     ...
 
-    "babel-core": "^6.22.1",
-    "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-react": "^6.22.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-async-to-promises": "^1.0.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
 
     ...
 }
@@ -41,75 +85,49 @@ This is the full `package.json` for the demonstration:
 ```javascript
 {
   "name": "jsplumbtoolkit-react",
-  "version": "1.8.0",
+  "version": "5.0.0",
   "description": "Integration between jsPlumb Toolkit and React",
   "main": "index.js",
   "author": "jsPlumb <hello@jsplumbtoolkit.com> (https://jsplumbtoolkit.com)",
   "license": "Commercial",
   "scripts": {
-    "build": "node ./node_modules/webpack/bin/webpack.js",
-    "start": "webpack-dev-server"
+    "build": "npx webpack",
+    "start": "npx webpack serve"
   },
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "jsplumbtoolkit": "file:./jsplumbtoolkit.tgz",
-    "jsplumbtoolkit-react": "file:./jsplumbtoolkit-react.tgz",
-    "jsplumbtoolkit-undo-redo": "file:./jsplumbtoolkit-undo-redo.tgz",
-    "jsplumbtoolkit-drop": "file:./jsplumbtoolkit-drop.tgz",
-    "jsplumbtoolkit-react-drop": "file:./jsplumbtoolkit-react-drop.tgz",
-    "jsplumbtoolkit-editable-connectors": "file:./jsplumbtoolkit-editable-connectors.tgz",
-    "@jsplumb/json-syntax-highlighter": "^1.0.4",
-    "@jsplumb/toolkit-demo-support": "^1.0.1"
+    "@jsplumbtoolkit/browser-ui-react": "^5.0.0",
+    "@jsplumbtoolkit/browser-ui-react-drop": "^5.0.0",
+    "@jsplumbtoolkit/dialogs": "^5.0.0",
+    "@jsplumbtoolkit/connector-editors-orthogonal": "^5.0.0",
+    "@jsplumbtoolkit/browser-ui-plugin-drawing-tools": "^5.0.0",
+    "@jsplumbtoolkit/browser-ui-plugin-lasso": "^5.0.0",
+    "jsplumbtoolkit-demo-support": "^1.0.0"
   },
   "devDependencies": {
-    "babel-core": "^6.22.1",
-    "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-react": "^6.22.0",
-    "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.11.5"
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-async-to-promises": "^1.0.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.2.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "sass": "^1.32.8",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.18",
+    "ts-node": "^9.1.1",
+    "typescript": "~3.4.0",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }
-
-
-
-```
-
-Note that we import the jsPlumb Toolkit and its React integration via local file references to their respective packages, which are included in licensed (and evaluation) downloads.
-
-
-[TOP](#top)
-
----
-
-<a name="webpack-setup"></a>
-### Webpack Setup
-
-This is the config file we use to setup Webpack to bundle our demonstration:
-
-```javascript
-var path = require('path');
-var webpack = require('webpack');
- 
-module.exports = {
-  entry: './src/index.jsx',
-  output: { 
-      path: path.join(__dirname, "dist"), 
-      filename: 'bundle.js' 
-    },
-  module: {
-    loaders: [
-      {
-        test: /.jsx?$/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react']
-        }
-      }
-    ]
-  },
-};
 ```
 
 [TOP](#top)
@@ -141,18 +159,18 @@ We use Webpack to create a bundle for the demonstration - JS dependencies are th
 "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "jsplumbtoolkit": "file:./jsplumbtoolkit.tgz",
-    "jsplumbtoolkit-react": "file:./jsplumbtoolkit-react.tgz",
-    "jsplumbtoolkit-undo-redo": "file:./jsplumbtoolkit-undo-redo.tgz",
-    "jsplumbtoolkit-drop": "file:./jsplumbtoolkit-drop.tgz",
-    "jsplumbtoolkit-react-drop": "file:./jsplumbtoolkit-react-drop.tgz",
-    "jsplumbtoolkit-editable-connectors": "file:./jsplumbtoolkit-editable-connectors.tgz",
-    "@jsplumb/json-syntax-highlighter": "^1.0.4",
-    "@jsplumb/toolkit-demo-support": "^1.0.1"
+    "@jsplumbtoolkit/browser-ui-react": "^5.0.0",
+    "@jsplumbtoolkit/browser-ui-react-drop": "^5.0.0",
+    "@jsplumbtoolkit/dialogs": "^5.0.0",
+    "@jsplumbtoolkit/connector-editors-orthogonal": "^5.0.0",
+    "@jsplumbtoolkit/browser-ui-plugin-drawing-tools": "^5.0.0",
+    "@jsplumbtoolkit/browser-ui-plugin-lasso": "^5.0.0",
+    "jsplumbtoolkit-demo-support": "^1.0.0"
 }
 ```
 
-jsPlumb 2.4.8 - the latest version at the time of writing - works with version `17.0.0` of React. Prior versions of jsPlumb have been tested with versions `15.4.2`, `15.5.0` and `16.0.0` of React.
+5.x versions of the Toolkit require React 17+.
+
 
 [TOP](#top)
 
@@ -425,7 +443,7 @@ The miniview and palette components are created inside `componentDidMount()`:
 
 ```javascript
 componentDidMount() {
-    this.toolkit.load({url:"data/flowchart-1.json"});
+    this.toolkit.load({url:"data/copyright.json"});
     this.controls.initialize(this.surface);
     this.dataset.initialize(this.surface);
     new jsPlumbToolkit.DrawingTools({
