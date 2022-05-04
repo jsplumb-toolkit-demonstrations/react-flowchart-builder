@@ -10,8 +10,8 @@
     "start": "npx webpack serve"
   },
   "dependencies": {
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "@jsplumbtoolkit/browser-ui-react": "^5.0.0",
     "@jsplumbtoolkit/browser-ui-react-drop": "^5.0.0",
     "@jsplumbtoolkit/dialogs": "^5.0.0",
