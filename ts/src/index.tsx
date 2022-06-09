@@ -1,5 +1,6 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+//import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client'
 
 import {
     JsPlumbToolkitMiniviewComponent,
@@ -302,17 +303,18 @@ export type DialogManager = {
             this.toolkit.load({url:"data/copyright.json"})
             this.controls.initialize(this.surface)
 
-            ReactDOM.render(
+            const p = createRoot(nodePaletteElement)
+            p.render(
                 <DragDropNodeSource
                     surface={this.surface}
                     selector={"div"}
                     container={nodePaletteElement}
                     dataGenerator={this.dataGenerator}
-                />
-                , nodePaletteElement);
+                />);
 
-            ReactDOM.render(
-                <JsPlumbToolkitMiniviewComponent surface={this.surface}/>, document.querySelector(".miniview")
+            const m = createRoot(document.querySelector(".miniview"))
+            m.render(
+                <JsPlumbToolkitMiniviewComponent surface={this.surface}/>
             );
 
         }
@@ -339,5 +341,6 @@ export type DialogManager = {
         }
     }        
 
-    ReactDOM.render(<DemoComponent/>, document.querySelector(".jtk-demo-canvas"))
+    const canvas = createRoot(document.querySelector(".jtk-demo-canvas"))
+    canvas.render(<DemoComponent/>)
 

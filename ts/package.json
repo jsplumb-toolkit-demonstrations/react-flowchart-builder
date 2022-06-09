@@ -1,6 +1,6 @@
 {
   "name": "jsplumbtoolkit-react",
-  "version": "5.0.0",
+  "version": "5.8.0",
   "description": "Integration between jsPlumb Toolkit and React",
   "main": "index.js",
   "author": "jsPlumb <hello@jsplumbtoolkit.com> (https://jsplumbtoolkit.com)",
@@ -12,12 +12,12 @@
   "dependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "@jsplumbtoolkit/browser-ui-react": "^5.0.0",
-    "@jsplumbtoolkit/browser-ui-react-drop": "^5.0.0",
-    "@jsplumbtoolkit/dialogs": "^5.0.0",
-    "@jsplumbtoolkit/connector-editors-orthogonal": "^5.0.0",
-    "@jsplumbtoolkit/browser-ui-plugin-drawing-tools": "^5.0.0",
-    "@jsplumbtoolkit/browser-ui-plugin-lasso": "^5.0.0",
+    "@jsplumbtoolkit/browser-ui-react": "^5.8.0",
+    "@jsplumbtoolkit/browser-ui-react-drop": "^5.8.0",
+    "@jsplumbtoolkit/dialogs": "^5.8.0",
+    "@jsplumbtoolkit/connector-editors-orthogonal": "^5.8.0",
+    "@jsplumbtoolkit/browser-ui-plugin-drawing-tools": "^5.8.0",
+    "@jsplumbtoolkit/browser-ui-plugin-lasso": "^5.8.0",
     "jsplumbtoolkit-demo-support": "^1.0.0"
   },
   "devDependencies": {
