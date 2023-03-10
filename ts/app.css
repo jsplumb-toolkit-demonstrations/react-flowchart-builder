@@ -73,7 +73,7 @@
     background-color: #d83f3f;
 }
 
-.flowchart-object.jtk-surface-selected-element .node-action {
+.jtk-surface-selected-element .node-action {
     display: block;
     width: 15px;
     height: 15px;
