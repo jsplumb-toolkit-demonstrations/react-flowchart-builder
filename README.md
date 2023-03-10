@@ -5,8 +5,9 @@ This is a port of the Flowchart Builder application that demonstrates the Toolki
 
 ![Flowchart Builder Demonstration](demo-flowchart.png)
 
-
 You can see this demonstration in action here: [https://demo.jsplumbtoolkit.com/react-flowchart-builder/](https://demo.jsplumbtoolkit.com/react-flowchart-builder/)
+
+**NOTE** This is the original React flowchart builder, which uses class based components. You might want to checkout the new [hooks and functional components](https://github.com/jsplumb-toolkit-demonstrations/react-flowchart-builder-hooks) version of this demonstration instead. 
 
 ### Installation
 
