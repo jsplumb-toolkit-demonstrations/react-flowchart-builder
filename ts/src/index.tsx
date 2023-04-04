@@ -5,7 +5,17 @@ import { createRoot } from 'react-dom/client'
 import {
     JsPlumbToolkitMiniviewComponent,
     JsPlumbToolkitSurfaceComponent,
-    BrowserUIReact,
+    BrowserUIReact
+}  from '@jsplumbtoolkit/browser-ui-react'
+
+
+import {
+    Dialogs,
+    Edge, Vertex,
+    AbsoluteLayout,
+    Node,
+    uuid,
+    ObjectData,
     Surface,
     EVENT_CANVAS_CLICK,
     EVENT_CLICK,
@@ -14,34 +24,24 @@ import {
     ArrowOverlay,
     BlankEndpoint,
     LabelOverlay,
-    AnchorLocations
-}  from '@jsplumbtoolkit/browser-ui-react'
-
-
-import * as Dialogs from "@jsplumbtoolkit/dialogs"
-import {Edge, Vertex, AbsoluteLayout, Node, uuid, ObjectData} from "@jsplumbtoolkit/core"
-
-import * as ConnectorEditors from "@jsplumbtoolkit/connector-editors"
-
-import * as OrthogonalConnectorEditor from "@jsplumbtoolkit/connector-editors-orthogonal"
-
-import { OrthogonalConnector } from "@jsplumbtoolkit/connector-orthogonal"
-import { DrawingToolsPlugin } from "@jsplumbtoolkit/browser-ui-plugin-drawing-tools"
+    AnchorLocations,
+    OrthogonalConnector,
+    DrawingToolsPlugin,
+    EdgePathEditor,
+    LassoPlugin,
+    CancelFunction,
+    CommitFunction
+} from "@jsplumbtoolkit/browser-ui"
 
 import { QuestionComponent } from './question-component'
 import { ActionComponent } from './action-component'
 import { OutputComponent } from './output-component'
+
 import { StartComponent } from './start-component'
 
 import DragDropNodeSource from './drag-drop-node-source'
 
 import { ControlsComponent } from './controls-component'
-
-import {EdgePathEditor} from "@jsplumbtoolkit/connector-editors"
-import {LassoPlugin} from "@jsplumbtoolkit/browser-ui-plugin-lasso"
-import {CancelFunction, CommitFunction} from "@jsplumbtoolkit/dialogs"
-
-OrthogonalConnectorEditor.initialize()
 
 const START = "start"
 const OUTPUT = "output"
@@ -64,20 +64,20 @@ export type DialogManager = {
 
 // ------------------------- dialogs ------------------------------------------------------------
 
-    const dialogs = Dialogs.newInstance({
+    const dialogs = new Dialogs({
         dialogs: {
             dlgText: {
-                template:'<input type="text" size="50" jtk-focus jtk-att="text" value="${text}" jtk-commit="true"/>',
+                template:'<input type="text" size="50" jtk-focus jtk-att="text" value="{{text}}" jtk-commit="true"/>',
                 title:'Enter Text',
                 cancelable:true
             },
             dlgConfirm: {
-                template:'${msg}',
+                template:'{{msg}}',
                 title:'Please Confirm',
                 cancelable:true
             },
             dlgMessage: {
-                template:'${msg}',
+                template:'{{msg}}',
                 title:'Message',
                 cancelable:false
             }
@@ -222,7 +222,7 @@ export type DialogManager = {
                             {
                                 type: LabelOverlay.type,
                                 options:{
-                                    label: "${label}",
+                                    label: "{{label}}",
                                     events:{
                                         click:(params:{edge:Edge}) => {
                                             this._editLabel(params.edge);
@@ -298,7 +298,7 @@ export type DialogManager = {
 
         componentDidMount() {
 
-            this.pathEditor = ConnectorEditors.newInstance(this.surface)
+            this.pathEditor = new EdgePathEditor(this.surface)
 
             this.toolkit.load({url:"data/copyright.json"})
             this.controls.initialize(this.surface)

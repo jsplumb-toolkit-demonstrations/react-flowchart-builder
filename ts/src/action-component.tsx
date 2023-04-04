@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import {Node} from "@jsplumbtoolkit/core"
+import {Node} from "@jsplumbtoolkit/browser-ui"
 
 import {BaseComponentProps, BaseEditableComponent} from "./base-component"
 
